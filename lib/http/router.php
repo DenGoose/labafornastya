@@ -31,7 +31,10 @@ class Router
 		return self::$instance;
 	}
 
-	public function add(string $url, string $controllerName, string $method = 'get')
+	/**
+	 * @throws \Exception
+	 */
+	public function run(string $url, string $controllerName, string $method = 'get')
 	{
 		if ($url === $this->url && $method == $this->method)
 		{
@@ -43,6 +46,11 @@ class Router
 					'url' => $this->url
 				]
 			];
+
+			if (!class_exists($className))
+			{
+				throw new \Exception("Контроллер ${controllerName} не найден");
+			}
 
 			/** @var BaseController $ob */
 			$ob = new $className($params);
