@@ -1,6 +1,6 @@
 <?php
 
-\Lib\Http\Router::getInstance()->run( // поменять page на controller
+\Lib\Http\Router::getInstance()->run(
 	'/',
 	'IndexController',
 	'get'
