@@ -34,17 +34,15 @@ class Router
 	/**
 	 * @throws \Exception
 	 */
-	public function run(string $url, string $controllerName, string $method = 'get')
+	public function run(string $url, string $controllerName, string $action, string $requestMethod = 'get', array $params = [])
 	{
-		if ($url === $this->url && $method == $this->method)
+		if ($url === $this->url && $requestMethod == $this->method)
 		{
 			$className = '\\App\\Controller\\' . $controllerName;
-			$params = [
-				'request' => [
-					'get' => $this->get,
-					'post' => $this->post,
-					'url' => $this->url
-				]
+			$params['request'] = [
+				'get' => $this->get,
+				'post' => $this->post,
+				'url' => $this->url
 			];
 
 			if (!class_exists($className))
@@ -55,7 +53,10 @@ class Router
 			/** @var BaseController $ob */
 			$ob = new $className($params);
 
-			$ob->exec();
+			if (mb_strlen($action) && method_exists($ob, $action))
+			{
+				$ob->$action();
+			}
 		}
 	}
 }

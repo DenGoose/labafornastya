@@ -24,13 +24,18 @@ class DB
 	{
 		$arEnv = explode("\n", file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/.env'));
 
+		$arEnv = array_filter($arEnv);
+
 		$env = [];
 
 		foreach ($arEnv as $item)
 		{
 			$temp = explode('=', $item);
 
-			$env[$temp[0]] = $temp[1];
+			if ($temp[1])
+			{
+				$env[trim($temp[0])] = trim($temp[1]);
+			}
 		}
 
 		$this->hostName = $env['db-host'];
@@ -52,6 +57,7 @@ class DB
 		} catch (\PDOException $e)
 		{
 			echo 'Подключение не удалось: ' . $e->getMessage();
+			die();
 		}
 	}
 

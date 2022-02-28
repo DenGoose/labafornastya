@@ -1,10 +1,15 @@
 <?php /* @var array $params */ ?>
-<?php \Lib\View\ViewManager::show('header', ['title' => 'тайтл']); ?>
+<?php \Lib\View\ViewManager::show(
+	'header',
+	[
+		'title' => $params['title'] ?? ''
+    ]
+); ?>
 
 <div>
-	<h1>
+	<h5>
 		Какой то див
-	</h1>
+	</h5>
     <div>
 		<?php echo '<pre>' . __FILE__ . ':' . __LINE__ . ':<br>' . print_r($params, true) . '</pre>'; ?>
     </div>
