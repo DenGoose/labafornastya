@@ -10,9 +10,16 @@ class SalePointModel extends \Lib\Model\BaseModel
 		// TODO: Implement create() method.
 	}
 
-	public static function read(): array
+	public static function read($filter = ''): array
 	{
-		$ob = self::query('select * from sale_points');
+		$sql = 'select id, name from sale_points';
+
+		if ($filter)
+		{
+			$sql .= ' where ' . $filter;
+		}
+
+		$ob = self::query($sql);
 
 		$result = [];
 

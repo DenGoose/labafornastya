@@ -21,6 +21,11 @@ class Router
 		$this->method = mb_strtolower($_SERVER['REQUEST_METHOD']);
 	}
 
+	public function get(): array
+	{
+		return $this->get;
+	}
+
 	public static function getInstance(): ?Router
 	{
 		if (!self::$instance)
@@ -57,6 +62,13 @@ class Router
 			{
 				$ob->$action();
 			}
+
+			die();
 		}
+	}
+
+	public static function redirect($url)
+	{
+
 	}
 }

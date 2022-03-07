@@ -21,6 +21,33 @@
 );
 
 \Lib\Http\Router::getInstance()->run(
+	'/sale_points/edit/',
+	'SalePointsController',
+	'showEditPage',
+	'get',
+	[
+		'title' => 'Изменение точки '// . \Lib\Http\Router::getInstance()->get()['name']
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/sale_points/add/',
+	'SalePointsController',
+	'showAddPage',
+	'get',
+	[
+		'title' => 'Добавить точку'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/sale_points/delete/',
+	'SalePointsController',
+	'delete',
+	'get'
+);
+
+\Lib\Http\Router::getInstance()->run(
 	'/managers/',
 	'ManagersController',
 	'show',
