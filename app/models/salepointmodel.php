@@ -5,12 +5,14 @@ namespace App\Models;
 class SalePointModel extends \Lib\Model\BaseModel
 {
 
-	public static function create()
+	public static function create($fields)
 	{
-		// TODO: Implement create() method.
+		$sql = 'insert into sale_points (name) values (:name)';
+
+		self::query($sql, [':name' => $fields['name']]);
 	}
 
-	public static function read($filter = ''): array
+	public static function read($filter = '', $params = []): array
 	{
 		$sql = 'select id, name from sale_points';
 
@@ -19,7 +21,7 @@ class SalePointModel extends \Lib\Model\BaseModel
 			$sql .= ' where ' . $filter;
 		}
 
-		$ob = self::query($sql);
+		$ob = self::query($sql, $params);
 
 		$result = [];
 
@@ -31,13 +33,17 @@ class SalePointModel extends \Lib\Model\BaseModel
 		return $result;
 	}
 
-	public static function update()
+	public static function update($set, $filter, $fields)
 	{
-		// TODO: Implement update() method.
+		$sql = 'update sale_points set ' . $set . ' where ' . $filter;
+
+		self::query($sql, $fields);
 	}
 
-	public static function delete()
+	public static function delete($filter, $fields)
 	{
-		// TODO: Implement delete() method.
+		$sql = 'delete from sale_points where ' . $filter;
+
+		self::query($sql, $fields);
 	}
 }

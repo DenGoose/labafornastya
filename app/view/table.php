@@ -24,8 +24,13 @@
 			<td><?=$el?></td>
 		<?php endforeach;?>
 		<td>
-			<a href="<?=$params['currentUrl']?>edit/?id=<?=$item['id']?>&name=<?=$item['name']?>" class="btn btn-warning">Изменить</a>
-			<a href="<?=$params['currentUrl']?>delete/?id=<?=$item['id']?>&name=<?=$item['name']?>" class="btn btn-danger">Удалить</a>
+            <div class="dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" id="element_actions" data-bs-toggle="dropdown" aria-expanded="false">Выбрать действие</button>
+                <ul class="dropdown-menu" aria-labelledby="element_actions">
+                    <li><a href="<?=$params['currentUrl']?>edit/?id=<?=$item['id']?>" class="dropdown-item">Изменить</a></li>
+                    <li><a href="<?=$params['currentUrl']?>delete/?id=<?=$item['id']?>" class="dropdown-item">Удалить</a></li>
+                </ul>
+            </div>
 		</td>
 	</tr>
 	<?php endforeach;?>
@@ -38,7 +43,7 @@
     </div>
 <?php endif;?>
 <div class="pt-5">
-    <a href="<?=$params['currentUrl']?>add/" class="btn btn-success">Добавить запись</a>
+    <a href="<?=$params['currentUrl']?>add/" class="btn btn-dark">Добавить запись</a>
 </div>
 
 <?php \Lib\View\ViewManager::show('footer'); ?>

@@ -1,5 +1,7 @@
 <?php
 
+// Индексовая страница
+
 \Lib\Http\Router::getInstance()->run(
 	'/',
 	'IndexController',
@@ -9,6 +11,8 @@
 		'title' => 'Мэин пейдж'
 	]
 );
+
+// Точки продаж
 
 \Lib\Http\Router::getInstance()->run(
 	'/sale_points/',
@@ -26,7 +30,17 @@
 	'showEditPage',
 	'get',
 	[
-		'title' => 'Изменение точки '// . \Lib\Http\Router::getInstance()->get()['name']
+		'title' => 'Изменение точки !NAME!'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/sale_points/edit/',
+	'SalePointsController',
+	'edit',
+	'post',
+	[
+		'title' => 'Изменение точки'
 	]
 );
 
@@ -41,11 +55,26 @@
 );
 
 \Lib\Http\Router::getInstance()->run(
+	'/sale_points/add/',
+	'SalePointsController',
+	'add',
+	'post',
+	[
+		'title' => 'Добавить точку'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
 	'/sale_points/delete/',
 	'SalePointsController',
 	'delete',
-	'get'
+	'get',
+	[
+		'title' => 'Добавить точку'
+	]
 );
+
+// Менеджеры
 
 \Lib\Http\Router::getInstance()->run(
 	'/managers/',
@@ -57,6 +86,8 @@
 	]
 );
 
+// Клиенты
+
 \Lib\Http\Router::getInstance()->run(
 	'/clients/',
 	'ClientsController',
@@ -67,6 +98,8 @@
 	]
 );
 
+// Займы
+
 \Lib\Http\Router::getInstance()->run(
 	'/loans/',
 	'LoansController',
@@ -76,6 +109,8 @@
 		'title' => 'Займы'
 	]
 );
+
+// Платежи
 
 \Lib\Http\Router::getInstance()->run(
 	'/payments/',
