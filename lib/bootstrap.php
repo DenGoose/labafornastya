@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+if (!file_exists($_SERVER['DOCUMENT_ROOT'] . '/files'))
+{
+	mkdir($_SERVER['DOCUMENT_ROOT'] . '/files');
+}
+
 require_once $_SERVER["DOCUMENT_ROOT"] . '/vendor/autoload.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/app/constants.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/app/router.php';
