@@ -2,12 +2,276 @@
 
 namespace App\Controller;
 
+use App\Models\ClientsModel;
+use App\Models\LoansModel;
+
 class LoansController extends \Lib\Controller\BaseController
 {
-
 	public function show()
 	{
-		\Lib\View\ViewManager::show('index', $this->params);
+		$result = [];
 
+		$result['columns'] = ['ID', 'Фото клиента', 'Цель займа', 'Комментарий менеджера', 'Сумма займа', 'Имя клиента'];
+		$result['items'] = LoansModel::read();
+
+		foreach ($result['items'] as &$itm)
+		{
+			unset($itm['id_client']);
+		}
+
+		if (isset($_SESSION['msg']))
+		{
+			$result['alert']['text'] = $_SESSION['msg'];
+			unset($_SESSION['msg']);
+		}
+
+		self::includeView('table', $result);
+	}
+
+	public function showEditPage()
+	{
+		$clients = [];
+
+		foreach (ClientsModel::read() as $client)
+		{
+			$temp = [];
+
+			foreach ($client as $fieldName => $field)
+			{
+				$temp[$fieldName] = $field['value'];
+			}
+
+			$clients[] = $temp;
+		}
+
+		if (!intval($this->params['request']['get']['id']))
+		{
+			header('Location: /loans/');
+		}
+		$result = [];
+
+		$db = LoansModel::read(
+			'loans.id = :id',
+			[':id' =>  $this->params['request']['get']['id']]
+		);
+
+		$result['items'] = [
+			[
+				'name' => 'Фото клиента',
+				'code' => 'photo',
+				'type' => 'file'
+			],
+			[
+				'name' => 'Цель займа',
+				'code' => 'loan_purpose',
+				'type' => 'text',
+				'value' => $db[$this->params['request']['get']['id']]['loan_purpose']['value']
+			],
+			[
+				'name' => 'Комментарий менеджера',
+				'code' => 'manager_comment',
+				'type' => 'text',
+				'value' => $db[$this->params['request']['get']['id']]['manager_comment']['value']
+			],
+			[
+				'name' => 'Сумма займа',
+				'code' => 'loan_amount',
+				'type' => 'text',
+				'value' => $db[$this->params['request']['get']['id']]['loan_amount']['value']
+			],
+			[
+				'name' => 'Клиент',
+				'code' => 'id_client',
+				'type' => 'list',
+				'list_values' => $clients,
+				'value' => $db[$this->params['request']['get']['id']]['id_client']['value']
+			],
+			[
+				'code' => 'id',
+				'value' => $this->params['request']['get']['id']
+			]
+		];
+
+
+		$this->params['title'] = str_replace('!ID!', $this->params['request']['get']['id'], $this->params['title']);
+
+		$result['action'] = '/loans/edit/';
+
+		self::includeView('record', $result);
+	}
+
+	public function edit()
+	{
+		if (LoansModel::read('loans.id = :id', [':id' => $this->params['request']['post']['id']]))
+		{
+			$sql = 'loan_purpose = :loan_purpose, manager_comment = :manager_comment, loan_amount = :loan_amount, id_client = :id_client';
+			$sqlParams = [
+				':id' => $this->params['request']['post']['id'],
+				':loan_purpose' => $this->params['request']['post']['loan_purpose'],
+				':manager_comment' => $this->params['request']['post']['manager_comment'],
+				':loan_amount' => $this->params['request']['post']['loan_amount'],
+				':id_client' => $this->params['request']['post']['id_client'],
+			];
+
+			if ($this->params['request']['files']['photo']['name'])
+			{
+				$filePath = '/files/' . $this->params['request']['files']['photo']['name'];
+
+				move_uploaded_file($this->params['request']['files']['photo']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $filePath);
+
+				$sql .= ', photo = :photo';
+				$sqlParams[':photo'] = $filePath;
+			}
+
+
+			LoansModel::update(
+				$sql,
+				'id = :id',
+				$sqlParams
+			);
+			$_SESSION['msg'] = 'Точка успешно изменена';
+			header('Location: /loans/');
+			die();
+		}
+		else
+		{
+			header('Location: /loans/');
+			die();
+		}
+	}
+
+	public function showAddPage($fields = [])
+	{
+		$clients = [];
+
+		foreach (ClientsModel::read() as $client)
+		{
+			$temp = [];
+
+			foreach ($client as $fieldName => $field)
+			{
+				$temp[$fieldName] = $field['value'];
+			}
+
+			$clients[] = $temp;
+		}
+
+		$result = [];
+
+		if (!$fields)
+		{
+			$result['items'] = [
+				[
+					'name' => 'Фото клиента',
+					'code' => 'photo',
+					'type' => 'file'
+				],
+				[
+					'name' => 'Цель займа',
+					'code' => 'loan_purpose',
+					'type' => 'text'
+				],
+				[
+					'name' => 'Комментарий менеджера',
+					'code' => 'manager_comment',
+					'type' => 'text'
+				],
+				[
+					'name' => 'Сумма займа',
+					'code' => 'loan_amount',
+					'type' => 'text'
+				],
+				[
+					'name' => 'Клиент',
+					'code' => 'id_client',
+					'type' => 'list',
+					'list_values' => $clients
+				]
+			];
+		}
+		else
+		{
+			$result['items'][] = [
+				[
+					'name' => 'Фото клиента',
+					'code' => 'photo',
+					'type' => 'text',
+					'value' => $fields['name'],
+					'error' => $fields['error']
+				],
+				[
+					'name' => 'Цель займа',
+					'code' => 'loan_purpose',
+					'type' => 'text',
+					'value' => $fields['name'],
+					'error' => $fields['error']
+				],
+				[
+					'name' => 'Комментарий менеджера',
+					'code' => 'manager_comment',
+					'type' => 'text',
+					'value' => $fields['name'],
+					'error' => $fields['error']
+				],
+				[
+					'name' => 'Сумма займа',
+					'code' => 'loan_amount',
+					'type' => 'text',
+					'value' => $fields['name'],
+					'error' => $fields['error']
+				],
+				[
+					'name' => 'Клиент',
+					'code' => 'id_client',
+					'type' => 'list',
+					'list_values' => ClientsModel::read(),
+					'value' => $fields['name'],
+					'error' => $fields['error']
+				]
+			];
+		}
+
+		$result['action'] = '/loans/add/';
+
+		self::includeView('record', $result);
+	}
+
+	public function add()
+	{
+		$filePath = '/files/' . $this->params['request']['files']['photo']['name'];
+
+		if ($this->params['request']['files']['photo']['name'] && move_uploaded_file($this->params['request']['files']['photo']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $filePath))
+		{
+			$this->params['request']['post']['photo'] = $filePath;
+			LoansModel::create($this->params['request']['post']);
+			$_SESSION['msg'] = 'Клиент успешно добавлен';
+			header('Location: /loans/');
+			die();
+		}
+		else
+		{
+			self::showAddPage([
+				'name' => $this->params['request']['post']['name'],
+				'error' => 'Не удалось загрузить файл'
+			]);
+		}
+
+
+	}
+
+	public function delete()
+	{
+		if (LoansModel::read('loans.id = :id', [':id' => $this->params['request']['get']['id']]))
+		{
+			LoansModel::delete('id = :id', [':id' => $this->params['request']['get']['id']]);
+			$_SESSION['msg'] = 'Клиент успешно удалён';
+			header('Location: /loans/');
+			die();
+		}
+		else
+		{
+			header('Location: /loans/');
+			die();
+		}
 	}
 }

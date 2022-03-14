@@ -12,12 +12,14 @@ class Router
 	protected array $get = [];
 	protected array $post = [];
 	protected string $method = '';
+	protected array $files = [];
 
 	public function __construct()
 	{
 		$this->url = explode('?', $_SERVER['REQUEST_URI'])[0];
 		$this->get = $_GET;
 		$this->post = $_POST;
+		$this->files = $_FILES;
 		$this->method = mb_strtolower($_SERVER['REQUEST_METHOD']);
 	}
 
@@ -47,6 +49,7 @@ class Router
 			$params['request'] = [
 				'get' => $this->get,
 				'post' => $this->post,
+				'files' => $this->files,
 				'url' => $this->url
 			];
 

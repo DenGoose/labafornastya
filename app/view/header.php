@@ -28,19 +28,10 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/sale_points/">Точки продаж</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/managers/">Менеджеры</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="/clients/">Клиенты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/loans/">Займы</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/payments/">Платежи</a>
                     </li>
                 </ul>
             </div>

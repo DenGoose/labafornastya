@@ -8,81 +8,7 @@
 	'exec',
 	'get',
 	[
-		'title' => 'Мэин пейдж'
-	]
-);
-
-// Точки продаж
-
-\Lib\Http\Router::getInstance()->run(
-	'/sale_points/',
-	'SalePointsController',
-	'show',
-	'get',
-	[
-		'title' => 'Точки продаж'
-	]
-);
-
-\Lib\Http\Router::getInstance()->run(
-	'/sale_points/edit/',
-	'SalePointsController',
-	'showEditPage',
-	'get',
-	[
-		'title' => 'Изменение точки !NAME!'
-	]
-);
-
-\Lib\Http\Router::getInstance()->run(
-	'/sale_points/edit/',
-	'SalePointsController',
-	'edit',
-	'post',
-	[
-		'title' => 'Изменение точки'
-	]
-);
-
-\Lib\Http\Router::getInstance()->run(
-	'/sale_points/add/',
-	'SalePointsController',
-	'showAddPage',
-	'get',
-	[
-		'title' => 'Добавить точку'
-	]
-);
-
-\Lib\Http\Router::getInstance()->run(
-	'/sale_points/add/',
-	'SalePointsController',
-	'add',
-	'post',
-	[
-		'title' => 'Добавить точку'
-	]
-);
-
-\Lib\Http\Router::getInstance()->run(
-	'/sale_points/delete/',
-	'SalePointsController',
-	'delete',
-	'get',
-	[
-		'title' => 'Добавить точку'
-	]
-);
-
-// Менеджеры
-
-\Lib\Http\Router::getInstance()->run(
-	'/managers/',
-	'ManagersController',
-	'show',
-	'get',
-	[
-		'title' => 'Менеджеры'
+		'title' => 'Главная страница'
 	]
 );
 
@@ -98,6 +24,56 @@
 	]
 );
 
+\Lib\Http\Router::getInstance()->run(
+	'/clients/edit/',
+	'ClientsController',
+	'showEditPage',
+	'get',
+	[
+		'title' => 'Изменение клиента !NAME!'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/clients/edit/',
+	'ClientsController',
+	'edit',
+	'post',
+	[
+		'title' => 'Изменение клиента'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/clients/add/',
+	'ClientsController',
+	'showAddPage',
+	'get',
+	[
+		'title' => 'Добавить клиента'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/clients/add/',
+	'ClientsController',
+	'add',
+	'post',
+	[
+		'title' => 'Добавить клиента'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/clients/delete/',
+	'ClientsController',
+	'delete',
+	'get',
+	[
+		'title' => 'Добавить клиента'
+	]
+);
+
 // Займы
 
 \Lib\Http\Router::getInstance()->run(
@@ -110,14 +86,52 @@
 	]
 );
 
-// Платежи
-
 \Lib\Http\Router::getInstance()->run(
-	'/payments/',
-	'PaymentsController',
-	'show',
+	'/loans/edit/',
+	'LoansController',
+	'showEditPage',
 	'get',
 	[
-		'title' => 'Платежи'
+		'title' => 'Изменение займа №!ID!'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/loans/edit/',
+	'LoansController',
+	'edit',
+	'post',
+	[
+		'title' => 'Изменение займа'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/loans/add/',
+	'LoansController',
+	'showAddPage',
+	'get',
+	[
+		'title' => 'Добавить займ'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/loans/add/',
+	'LoansController',
+	'add',
+	'post',
+	[
+		'title' => 'Добавить займ'
+	]
+);
+
+\Lib\Http\Router::getInstance()->run(
+	'/loans/delete/',
+	'LoansController',
+	'delete',
+	'get',
+	[
+		'title' => 'Добавить займ'
 	]
 );

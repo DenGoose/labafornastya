@@ -11,8 +11,17 @@ class IndexController extends \Lib\Controller\BaseController
 	 */
 	public function exec()
 	{
-		$this->params['db'] = DB::getInstance()->getConnection()->query('show tables')->fetchAll(\PDO::FETCH_ASSOC);
+		$pages = [
+			[
+				'url' => '/clients/',
+				'name' => 'Клиенты'
+			],
+			[
+				'url' => '/loans/',
+				'name' => 'Займы'
+			]
+		];
 
-		\Lib\View\ViewManager::show('index', $this->params);
+		self::includeView('index', $pages);
 	}
 }

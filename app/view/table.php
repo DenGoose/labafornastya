@@ -1,7 +1,7 @@
 <?php /* @var array $params */ ?>
 <?php \Lib\View\ViewManager::show('header', ['title' => $params['title']]); ?>
 
-<?php if ($params['result']):?>
+<?php if ($params['result']['items']):?>
 <?php if (isset($params['result']['alert'])):?>
 <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
     <?=$params['result']['alert']['text']?>
@@ -21,14 +21,18 @@
 	<?php foreach ($params['result']['items'] as $item): ?>
 	<tr>
 		<?php foreach ($item as $el): ?>
-			<td><?=$el?></td>
+			<?php if ($el['type'] == 'text'):?>
+                <td><?=$el['value']?></td>
+			<?php elseif($el['type'] == 'photo'):?>
+                <td><a href="<?=$el['value']?>" target="_blank">Посмотреть фото</a></td>
+			<?php endif;?>
 		<?php endforeach;?>
 		<td>
             <div class="dropdown">
                 <button class="btn btn-dark dropdown-toggle" type="button" id="element_actions" data-bs-toggle="dropdown" aria-expanded="false">Выбрать действие</button>
                 <ul class="dropdown-menu" aria-labelledby="element_actions">
-                    <li><a href="<?=$params['currentUrl']?>edit/?id=<?=$item['id']?>" class="dropdown-item">Изменить</a></li>
-                    <li><a href="<?=$params['currentUrl']?>delete/?id=<?=$item['id']?>" class="dropdown-item">Удалить</a></li>
+                    <li><a href="<?=$params['currentUrl']?>edit/?id=<?=$item['id']['value']?>" class="dropdown-item">Изменить</a></li>
+                    <li><a href="<?=$params['currentUrl']?>delete/?id=<?=$item['id']['value']?>" class="dropdown-item">Удалить</a></li>
                 </ul>
             </div>
 		</td>
