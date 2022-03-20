@@ -77,7 +77,8 @@ class LoansController extends \Lib\Controller\BaseController
 				'name' => 'Сумма займа',
 				'code' => 'loan_amount',
 				'type' => 'text',
-				'value' => $db[$this->params['request']['get']['id']]['loan_amount']['value']
+				'value' => $_SESSION['fields_msg']['loan_amount']['value'] ?? $db[$this->params['request']['get']['id']]['loan_amount']['value'],
+				'error' => $_SESSION['fields_msg']['loan_amount']['msg'] ?? ''
 			],
 			[
 				'name' => 'Клиент',
@@ -92,6 +93,7 @@ class LoansController extends \Lib\Controller\BaseController
 			]
 		];
 
+		unset($_SESSION['fields_msg']);
 
 		$this->params['title'] = str_replace('!ID!', $this->params['request']['get']['id'], $this->params['title']);
 
@@ -102,6 +104,21 @@ class LoansController extends \Lib\Controller\BaseController
 
 	public function edit()
 	{
+		if (
+			intval($this->params['request']['post']['id']) != $this->params['request']['post']['id'] ||
+			intval($this->params['request']['post']['loan_amount']) != $this->params['request']['post']['loan_amount'] ||
+			intval($this->params['request']['post']['id_client']) != $this->params['request']['post']['id_client']
+		)
+		{
+			$_SESSION['fields_msg']['loan_amount'] = [
+				'msg' => intval($this->params['request']['post']['loan_amount']) != $this->params['request']['post']['loan_amount'] ? 'Сумма не должна содержать не цифры' : '',
+				'value' => $this->params['request']['post']['loan_amount']
+			];
+
+			header('Location: /loans/edit/?id=' . intval($this->params['request']['post']['id']));
+			die();
+		}
+
 		if (LoansModel::read('loans.id = :id', [':id' => $this->params['request']['post']['id']]))
 		{
 			$sql = 'loan_purpose = :loan_purpose, manager_comment = :manager_comment, loan_amount = :loan_amount, id_client = :id_client';
@@ -191,42 +208,42 @@ class LoansController extends \Lib\Controller\BaseController
 		}
 		else
 		{
-			$result['items'][] = [
+			$result['items'] = [
 				[
 					'name' => 'Фото клиента',
 					'code' => 'photo',
 					'type' => 'text',
-					'value' => $fields['name'],
-					'error' => $fields['error']
+					'value' => $fields['photo']['name'] ?? '',
+					'error' => $fields['photo']['error'] ?? ''
 				],
 				[
 					'name' => 'Цель займа',
 					'code' => 'loan_purpose',
 					'type' => 'text',
-					'value' => $fields['name'],
-					'error' => $fields['error']
+					'value' => $fields['loan_purpose']['name'] ?? '',
+					'error' => $fields['loan_purpose']['error'] ?? ''
 				],
 				[
 					'name' => 'Комментарий менеджера',
 					'code' => 'manager_comment',
 					'type' => 'text',
-					'value' => $fields['name'],
-					'error' => $fields['error']
+					'value' => $fields['manager_comment']['name'] ?? '',
+					'error' => $fields['manager_comment']['error'] ?? ''
 				],
 				[
 					'name' => 'Сумма займа',
 					'code' => 'loan_amount',
 					'type' => 'text',
-					'value' => $fields['name'],
-					'error' => $fields['error']
+					'value' => $fields['loan_amount']['name'] ?? '',
+					'error' => $fields['loan_amount']['error'] ?? ''
 				],
 				[
 					'name' => 'Клиент',
 					'code' => 'id_client',
 					'type' => 'list',
-					'list_values' => ClientsModel::read(),
-					'value' => $fields['name'],
-					'error' => $fields['error']
+					'list_values' => $clients,
+					'value' => $fields['id_client']['name'] ?? '',
+					'error' => $fields['id_client']['error'] ?? ''
 				]
 			];
 		}
@@ -238,6 +255,20 @@ class LoansController extends \Lib\Controller\BaseController
 
 	public function add()
 	{
+		if (
+			intval($this->params['request']['post']['loan_amount']) != $this->params['request']['post']['loan_amount'] ||
+			intval($this->params['request']['post']['id_client']) != $this->params['request']['post']['id_client']
+		)
+		{
+			self::showAddPage([
+				'loan_amount' => [
+					'name' => $this->params['request']['post']['loan_amount'],
+					'error' => 'Сумма не должна содержать не цифры'
+				]
+			]);
+			die();
+		}
+
 		$filePath = '/files/' . $this->params['request']['files']['photo']['name'];
 
 		if ($this->params['request']['files']['photo']['name'] && move_uploaded_file($this->params['request']['files']['photo']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . $filePath))
@@ -251,8 +282,10 @@ class LoansController extends \Lib\Controller\BaseController
 		else
 		{
 			self::showAddPage([
-				'name' => $this->params['request']['post']['name'],
-				'error' => 'Не удалось загрузить файл'
+				'photo' => [
+					'name' => $this->params['request']['post']['name'],
+					'error' => 'Не удалось загрузить файл'
+				]
 			]);
 		}
 

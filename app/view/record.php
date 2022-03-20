@@ -18,8 +18,8 @@
 			<?php else:?>
             <div class="mb-3">
                 <label for="input<?=$item['code']?>" class="form-label"><?=$item['name']?></label>
-                <input type="text" class="form-control <?=isset($item['error'])? 'is-invalid' : ''?>" placeholder="<?=$item['name']?>" name="<?=$item['code']?>" id="input<?=$item['code']?>" aria-describedby="<?=$item['code']?>Help" value="<?=$item['value'] ?? ''?>" required>
-                <?php if (isset($item['error'])):?>
+                <input type="text" class="form-control <?=isset($item['error']) && mb_strlen($item['error'])? 'is-invalid' : ''?>" placeholder="<?=$item['name']?>" name="<?=$item['code']?>" id="input<?=$item['code']?>" aria-describedby="<?=$item['code']?>Help" value="<?=$item['value'] ?? ''?>" required>
+                <?php if (isset($item['error']) && mb_strlen($item['error'])):?>
                     <div id="<?=$item['code']?>Help" class="invalid-feedback"><?=$item['error']?></div>
                 <?php endif;?>
             </div>
