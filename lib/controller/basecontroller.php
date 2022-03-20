@@ -4,10 +4,11 @@ namespace Lib\Controller;
 
 abstract class BaseController
 {
-	public function __construct(
-		protected array $params = []
-	)
+	protected array $params = [];
+
+	public function __construct($params)
 	{
+		$this->params = $params;
 	}
 
 	/**

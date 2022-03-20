@@ -7,6 +7,12 @@ use App\Models\LoansModel;
 
 class LoansController extends \Lib\Controller\BaseController
 {
+	/**
+	 * Отображает список Займов
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function show()
 	{
 		$result = [];
@@ -28,6 +34,12 @@ class LoansController extends \Lib\Controller\BaseController
 		self::includeView('table', $result);
 	}
 
+	/**
+	 * Отображает страницу с изменением займа
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function showEditPage()
 	{
 		$clients = [];
@@ -102,6 +114,11 @@ class LoansController extends \Lib\Controller\BaseController
 		self::includeView('record', $result);
 	}
 
+	/**
+	 * Изменяет информацию о займе
+	 *
+	 * @return void
+	 */
 	public function edit()
 	{
 		if (
@@ -157,6 +174,13 @@ class LoansController extends \Lib\Controller\BaseController
 		}
 	}
 
+	/**
+	 * Отображает страницу с добавлением Займа
+	 *
+	 * @param $fields
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function showAddPage($fields = [])
 	{
 		$clients = [];
@@ -253,6 +277,12 @@ class LoansController extends \Lib\Controller\BaseController
 		self::includeView('record', $result);
 	}
 
+	/**
+	 * Добавляет запись о Займе
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function add()
 	{
 		if (
@@ -292,6 +322,11 @@ class LoansController extends \Lib\Controller\BaseController
 
 	}
 
+	/**
+	 * Удаляет займ
+	 *
+	 * @return void
+	 */
 	public function delete()
 	{
 		if (LoansModel::read('loans.id = :id', [':id' => $this->params['request']['get']['id']]))

@@ -2,6 +2,7 @@
 $_SERVER["DOCUMENT_ROOT"] = __DIR__;
 require_once $_SERVER["DOCUMENT_ROOT"] . '/vendor/autoload.php';
 
+// Таблицы для миграции
 $tables = [
 	'create table if not exists clients(
     id   int auto_increment primary key,
@@ -20,6 +21,7 @@ $tables = [
 );'
 ];
 
+// Создаём таблицы
 foreach ($tables as $table)
 {
 	\Lib\DataBase\DB::getInstance()->getConnection()->query($table);

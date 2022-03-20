@@ -23,11 +23,11 @@ class Router
 		$this->method = mb_strtolower($_SERVER['REQUEST_METHOD']);
 	}
 
-	public function get(): array
-	{
-		return $this->get;
-	}
-
+	/**
+	 * Вызываем класс синглтон
+	 *
+	 * @return Router|null
+	 */
 	public static function getInstance(): ?Router
 	{
 		if (!self::$instance)
@@ -39,6 +39,8 @@ class Router
 	}
 
 	/**
+	 * Создаёт экземпляр контроллера для отображения страниц или сохранения информации
+	 *
 	 * @throws \Exception
 	 */
 	public function run(string $url, string $controllerName, string $action, string $requestMethod = 'get', array $params = [])
@@ -68,10 +70,5 @@ class Router
 
 			die();
 		}
-	}
-
-	public static function redirect($url)
-	{
-
 	}
 }

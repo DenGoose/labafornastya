@@ -6,6 +6,12 @@ use App\Models\ClientsModel;
 
 class ClientsController extends \Lib\Controller\BaseController
 {
+	/**
+	 * Отображает страницу с Клиентами
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function show()
 	{
 		$result = [];
@@ -54,6 +60,11 @@ class ClientsController extends \Lib\Controller\BaseController
 		self::includeView('record', $result);
 	}
 
+	/**
+	 * Изменяет запись о Клиенте
+	 *
+	 * @return void
+	 */
 	public function edit()
 	{
 		if (ClientsModel::read('id = :id', [':id' => $this->params['request']['post']['id']]))
@@ -98,6 +109,11 @@ class ClientsController extends \Lib\Controller\BaseController
 		self::includeView('record', $result);
 	}
 
+	/**
+	 * Добавляет Клиента
+	 *
+	 * @return void
+	 */
 	public function add()
 	{
 		if (!ClientsModel::read('name = :name', [':name' => $this->params['request']['post']['name']]))
@@ -116,6 +132,11 @@ class ClientsController extends \Lib\Controller\BaseController
 		}
 	}
 
+	/**
+	 * Удаляет клиента
+	 *
+	 * @return void
+	 */
 	public function delete()
 	{
 		if (ClientsModel::read('id = :id', [':id' => $this->params['request']['get']['id']]))
