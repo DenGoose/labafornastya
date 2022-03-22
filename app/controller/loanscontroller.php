@@ -236,7 +236,7 @@ class LoansController extends \Lib\Controller\BaseController
 				[
 					'name' => 'Фото клиента',
 					'code' => 'photo',
-					'type' => 'text',
+					'type' => 'file',
 					'value' => $fields['photo']['name'] ?? '',
 					'error' => $fields['photo']['error'] ?? ''
 				],

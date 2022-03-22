@@ -47,7 +47,6 @@ class Router
 	{
 		if ($url === $this->url && $requestMethod == $this->method)
 		{
-			$className = '\\App\\Controller\\' . $controllerName;
 			$params['request'] = [
 				'get' => $this->get,
 				'post' => $this->post,
@@ -55,13 +54,13 @@ class Router
 				'url' => $this->url
 			];
 
-			if (!class_exists($className))
+			if (!class_exists($controllerName))
 			{
 				throw new \Exception("Контроллер ${controllerName} не найден");
 			}
 
 			/** @var BaseController $ob */
-			$ob = new $className($params);
+			$ob = new $controllerName($params);
 
 			if (mb_strlen($action) && method_exists($ob, $action))
 			{

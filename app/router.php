@@ -4,7 +4,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/',
-	'IndexController',
+	\App\Controller\IndexController::class,
 	'exec',
 	'get',
 	[
@@ -16,7 +16,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/clients/',
-	'ClientsController',
+	\App\Controller\ClientsController::class,
 	'show',
 	'get',
 	[
@@ -26,7 +26,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/clients/edit/',
-	'ClientsController',
+	\App\Controller\ClientsController::class,
 	'showEditPage',
 	'get',
 	[
@@ -36,7 +36,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/clients/edit/',
-	'ClientsController',
+	\App\Controller\ClientsController::class,
 	'edit',
 	'post',
 	[
@@ -46,7 +46,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/clients/add/',
-	'ClientsController',
+	\App\Controller\ClientsController::class,
 	'showAddPage',
 	'get',
 	[
@@ -56,7 +56,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/clients/add/',
-	'ClientsController',
+	\App\Controller\ClientsController::class,
 	'add',
 	'post',
 	[
@@ -66,7 +66,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/clients/delete/',
-	'ClientsController',
+	\App\Controller\ClientsController::class,
 	'delete',
 	'get',
 	[
@@ -78,7 +78,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/loans/',
-	'LoansController',
+	\App\Controller\LoansController::class,
 	'show',
 	'get',
 	[
@@ -88,7 +88,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/loans/edit/',
-	'LoansController',
+	\App\Controller\LoansController::class,
 	'showEditPage',
 	'get',
 	[
@@ -98,7 +98,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/loans/edit/',
-	'LoansController',
+	\App\Controller\LoansController::class,
 	'edit',
 	'post',
 	[
@@ -108,7 +108,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/loans/add/',
-	'LoansController',
+	\App\Controller\LoansController::class,
 	'showAddPage',
 	'get',
 	[
@@ -118,7 +118,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/loans/add/',
-	'LoansController',
+	\App\Controller\LoansController::class,
 	'add',
 	'post',
 	[
@@ -128,7 +128,7 @@
 
 \Lib\Http\Router::getInstance()->run(
 	'/loans/delete/',
-	'LoansController',
+	\App\Controller\LoansController::class,
 	'delete',
 	'get',
 	[
