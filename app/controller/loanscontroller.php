@@ -18,7 +18,15 @@ class LoansController extends \Lib\Controller\BaseController
 		$result = [];
 
 		$result['columns'] = ['ID', 'Фото клиента', 'Цель займа', 'Комментарий менеджера', 'Сумма займа', 'Имя клиента'];
-		$result['items'] = LoansModel::read();
+
+		if (isset($this->params['request']['get']['client_id']) && intval($this->params['request']['get']['client_id']))
+		{
+			$result['items'] = LoansModel::read('loans.id_client = :id_client', [':id_client' => intval($this->params['request']['get']['client_id'])]);
+		}
+		else
+		{
+			$result['items'] = LoansModel::read();
+		}
 
 		foreach ($result['items'] as &$item)
 		{
