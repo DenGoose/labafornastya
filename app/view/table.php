@@ -34,7 +34,7 @@
                 <button class="btn btn-dark dropdown-toggle" type="button" id="element_actions" data-bs-toggle="dropdown" aria-expanded="false">Выбрать действие</button>
                 <ul class="dropdown-menu" aria-labelledby="element_actions">
                     <li><a href="<?=$params['currentUrl']?>edit/?id=<?=$item['id']['value']?>" class="dropdown-item">Изменить</a></li>
-                    <li><a href="<?=$params['currentUrl']?>delete/?id=<?=$item['id']['value']?>" class="dropdown-item">Удалить</a></li>
+                    <li><a href="<?=$params['currentUrl']?>delete/?id=<?=$item['id']['value']?>" class="dropdown-item confirm-delete">Удалить</a></li>
                 </ul>
             </div>
 		</td>
