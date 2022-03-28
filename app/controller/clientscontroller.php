@@ -28,6 +28,12 @@ class ClientsController extends \Lib\Controller\BaseController
 		self::includeView('table', $result);
 	}
 
+	/**
+	 * Отображает страницу изменения Клиента
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function showEditPage()
 	{
 		if (!intval($this->params['request']['get']['id']))
@@ -81,6 +87,12 @@ class ClientsController extends \Lib\Controller\BaseController
 		}
 	}
 
+	/**
+	 * Отображает страницу добавления Клиента
+	 *
+	 * @return void
+	 * @throws \Exception
+	 */
 	public function showAddPage($fields = [])
 	{
 		$result = [];

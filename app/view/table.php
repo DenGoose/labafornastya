@@ -25,6 +25,8 @@
                 <td><?=$el['value']?></td>
 			<?php elseif($el['type'] == 'photo'):?>
                 <td><a href="<?=$el['value']?>" target="_blank">Посмотреть фото</a></td>
+			<?php elseif($el['type'] == 'link'):?>
+                <td><a href="<?=$el['link']?>"><?=$el['value']?></a></td>
 			<?php endif;?>
 		<?php endforeach;?>
 		<td>

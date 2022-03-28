@@ -20,6 +20,12 @@ class LoansController extends \Lib\Controller\BaseController
 		$result['columns'] = ['ID', 'Фото клиента', 'Цель займа', 'Комментарий менеджера', 'Сумма займа', 'Имя клиента'];
 		$result['items'] = LoansModel::read();
 
+		foreach ($result['items'] as &$item)
+		{
+			$item['name']['type'] = 'link';
+			$item['name']['link'] = '/clients/edit/?id=' . $item['id_client']['value'];
+		}
+
 		foreach ($result['items'] as &$itm)
 		{
 			unset($itm['id_client']);
@@ -313,7 +319,6 @@ class LoansController extends \Lib\Controller\BaseController
 		{
 			self::showAddPage([
 				'photo' => [
-					'name' => $this->params['request']['post']['name'],
 					'error' => 'Не удалось загрузить файл'
 				]
 			]);

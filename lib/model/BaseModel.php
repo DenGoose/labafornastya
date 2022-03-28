@@ -49,6 +49,11 @@ abstract class BaseModel
 	{
 		$stmt = DB::getInstance()->getConnection()->prepare($query);
 
+		foreach ($params as &$param)
+		{
+			$param = htmlspecialchars(trim($param));
+		}
+
 		$stmt->execute($params);
 
 		return $stmt;
